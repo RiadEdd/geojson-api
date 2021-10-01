@@ -53,7 +53,7 @@ def iso_code(*, names: List = Query(...), params: Params = Depends(), details: O
     for entry in data["features"]:
         if entry["properties"]["name"] in names:
             if details:
-                isoNameReturnList.append({"id": entry["id"], "name": entry["properties"]["name"], "geometry_type": entry["geometry"]["type"], "coordinates": entry["geometry"]["coordinates"]})
+                isoNameReturnList.append({"id": entry["id"], "name": entry["properties"]["name"], "geometry_type": entry["geometry"]["type"], "geometry": entry["geometry"]["coordinates"][0]})
             else:
                 isoNameReturnList.append({"id": entry["id"], "name": entry["properties"]["name"]})
     return paginate(isoNameReturnList, params)
