@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>All Countries</title>
+        <link rel="stylesheet" href="{{ url_for('statics', path='/style.css') }}">
+    </head>
+    <body>
+        <h1 class="text-logo">GeoJSON API</h1>
+        <div class="table-wrapper">
+            <p class="data-description">Here you'll find a table of all the data in the GeoJSON API</p>
+            <table>
+                <tr>
+                    <th class="table-title-country">Country</th>
+                    <th>ISO Code</th>
+                    <th>Geometry Type</th>
+                    <th>Coordinates</th>
+                </tr>
+                {% for country in data %}
+                <tr>
+                    <td class="table-title-country">{{ country["properties"]["name"] }}</td>
+                    <td>{{ country["id"] }}</td>
+                    <td>{{ country["geometry"]["type"] }}</td>
+                    <td>{{ country["geometry"]["coordinates"] }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>

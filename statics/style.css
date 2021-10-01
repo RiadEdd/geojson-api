@@ -1,0 +1,49 @@
+/* all_geometries Page */
+body {
+    background-color: black;
+}
+
+.text-logo {
+    color: #A9BF54;
+}
+
+.data-description {
+    color: white;
+}
+
+table{
+    color: white;
+    width: 80vw;
+    border-collapse: collapse;
+}
+
+tr{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid white;
+}
+
+td{
+    text-align: center;
+    max-height: 100%;
+    max-width: 300px;
+    text-decoration: none; 
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap;
+}
+
+th{
+    color: #A9BF54;
+}
+
+.table-title-country{
+    text-align: left;
+}
+
+.table-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

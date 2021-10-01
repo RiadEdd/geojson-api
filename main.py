@@ -1,11 +1,18 @@
 from fastapi import FastAPI, Depends
 from fastapi.params import Query
 from fastapi_pagination import Page, Params, paginate
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from typing import TypeVar, Generic
 from fastapi_pagination.default import Page as BasePage, Params as BaseParams
 from pydantic import BaseModel
 from typing import (Dict, List, Optional, Set, Tuple)
 import json
+
+from starlette.requests import Request
+
+templates = Jinja2Templates(directory="templates")
 
 T = TypeVar("T")
 
@@ -34,11 +41,7 @@ with open("countries.geojson") as f:
     data = json.load(f)
     
 app = FastAPI()
-
-@app.get("/he" , response_model=Country)
-def home():
-    print({"id": data["features"][0]["id"], "name": data["features"][0]["properties"]["name"], "geometry_type": data["features"][0]["geometry"]["type"], "geometry": list(data["features"][0]["geometry"]["coordinates"])})
-    return {"id": data["features"][0]["id"], "name": data["features"][0]["properties"]["name"], "geometry_type": data["features"][0]["geometry"]["type"], "geometry": list(data["features"][0]["geometry"]["coordinates"])}
+app.mount("/statics", StaticFiles(directory="statics"), name="statics")
 
 @app.get("/iso_code", response_model=Page[isoName])
 def iso_code(*, names: List = Query(...), params: Params = Depends(), details: Optional[bool] = None): #Ellipsis (...) enables to make a parameter required
@@ -51,7 +54,12 @@ def iso_code(*, names: List = Query(...), params: Params = Depends(), details: O
                 isoNameReturnList.append({"id": entry["id"], "name": entry["properties"]["name"]})
     return paginate(isoNameReturnList, params)
 
-
+# Get all the informations in the API
 @app.get("/all_geometries")
 def all_geometries():
     return data["features"]
+
+# Get all the informations in the API in a Custom Response (HTML)
+@app.get("/all_countries", response_class=HTMLResponse) #delete this endpoint when it's OK for /all_geometries
+def all_countries(request: Request):
+    return templates.TemplateResponse("all_geometries.html", {"request": request, "data": data["features"]})
