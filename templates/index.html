@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>GeoJSON API</title>
+        <link rel="stylesheet" href="{{ url_for('statics', path='/index.css') }}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+    </head>
+    <body>
+        <h1>GeoJSON API</h1>
+        <div class="body-wrapper">
+            <div class="wrapper-input">
+                <input class="countries-input" type="text" id="countries">
+                <div class="wrapper-button">
+                    <span>
+                        <input class="checkbox" type="checkbox" id="options" name="options">
+                        <label for="options">With coordinates</label>
+                    </span>
+                    <span>
+                        <button class="button" onclick="iso_code()">Display</button>
+                    </span>
+                </div>
+            </div>
+            <div id="mapid"></div>
+        </div>
+    </body>
+</html>
+
+<script>
+    var countriesData;
+    var mymap = L.map('mapid').setView([0, 0], 2);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoicmlhZGVkZCIsImEiOiJja3U4ajg0YmEwYXo2MnByazczeG0xb29yIn0.2T6BJsfJ34Pbm_gEOBiCvA'
+}).addTo(mymap);
+
+    function all_geometries() {
+        fetch("http://127.0.0.1:8000/all_geometries")
+        .then((resp) => resp.json())
+        .then(function(data) {
+            console.log(data);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+
+    function iso_code() {
+        //Add a regex to check validity
+        var countries = document.getElementById("countries").value;
+        countries = countries.replace(/\s/g, ''); //Remove spaces
+        var countriesArray = countries.split(",");
+
+        var countriesOption = document.querySelector("#options").checked;
+
+        var url = new URL("http://127.0.0.1:8000/iso_code")
+ 
+        var params = []
+        countriesArray.forEach(country => {
+            params.push(['names',country]);
+        });
+        if (countriesOption) params.push(['details', countriesOption]);
+
+        url.search = new URLSearchParams(params).toString();
+
+        fetch(url)
+        .then((resp) => resp.json())
+        .then(function(data) {
+            console.log(data);
+            countriesData = data;
+            draw_countries();
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+
+    function draw_countries() {
+        return;
+    }
+</script>

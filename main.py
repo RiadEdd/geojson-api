@@ -43,6 +43,10 @@ with open("countries.geojson") as f:
 app = FastAPI()
 app.mount("/statics", StaticFiles(directory="statics"), name="statics")
 
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 @app.get("/iso_code", response_model=Page[isoName])
 def iso_code(*, names: List = Query(...), params: Params = Depends(), details: Optional[bool] = None): #Ellipsis (...) enables to make a parameter required
     isoNameReturnList = []
