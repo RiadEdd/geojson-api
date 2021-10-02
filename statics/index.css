@@ -1,10 +1,10 @@
 #mapid { 
-    height: 500px;
-    width: 70vw;
+    height: 400px;
+    width: 60vw;
 }
 
 body {
-    background-color: black;
+    margin: 0;
 }
 
 h1 {
@@ -12,6 +12,7 @@ h1 {
 }
 
 .body-wrapper {
+    background-color: #0839bc;
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -42,4 +43,46 @@ h1 {
 
 label {
     color: white;
+}
+
+.svg-wrapper {
+    width: 100%;
+    background-color: white;
+}
+
+.map-wrapper {
+    width: 100%;
+    background-color: white !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.map-buttons {
+    width: 60vw; /*Map Width*/
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.blue-button {
+    background-color: #0839bc;
+    color: white;
+    border-radius: 5px;
+    outline: inherit;
+    border: none;
+    padding: 6px 12px 6px 12px;
+    cursor: pointer;
+}
+
+.white-button {
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    outline: inherit;
+    border: none;
+    padding: 6px 12px 6px 12px;
+    cursor: pointer;
 }

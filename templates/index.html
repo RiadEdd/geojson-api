@@ -20,11 +20,23 @@
                         <label for="options">With coordinates</label>
                     </span>
                     <span>
-                        <button class="button" onclick="iso_code()">Display</button>
+                        <button class="button white-button" onclick="iso_code()">Display</button>
                     </span>
                 </div>
             </div>
-            <div id="mapid"></div>
+            <div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0839bc" fill-opacity="1" d="M0,192L60,202.7C120,213,240,235,360,208C480,181,600,107,720,90.7C840,75,960,117,1080,165.3C1200,213,1320,267,1380,293.3L1440,320L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
+            </div>
+            <div class="map-wrapper">
+                <div class="map-buttons">
+                    <button class="blue-button">Add</button>
+                    <button class="blue-button">Reset the map</button>
+                </div>
+                <div id="mapid"></div>
+            </div>
+            <div class="footer">
+                EDDAHABI Riad
+            </div>
         </div>
     </body>
 </html>
