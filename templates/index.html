@@ -31,7 +31,7 @@
 
 <script>
     var countriesData;
-    var mymap = L.map('mapid').setView([0, 0], 2);
+    var mymap = L.map('mapid').setView([15, 2], 3);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -73,8 +73,7 @@
         fetch(url)
         .then((resp) => resp.json())
         .then(function(data) {
-            console.log(data);
-            countriesData = data;
+            countriesData = data["items"];
             draw_countries();
         })
         .catch(function(error) {
@@ -83,6 +82,15 @@
     }
 
     function draw_countries() {
-        return;
+        if(countriesData && countriesData.length != 0) {
+            for (let i = 0; i < countriesData.length; i++) {
+                var geometryList = [];
+                for (let y = 0; y < countriesData[i]["geometry"].length; y++) {
+                    //Lat and long are inverted, but it still doesn't always work. France for example ?
+                    geometryList.push([countriesData[i]["geometry"][y][1],countriesData[i]["geometry"][y][0]]);
+                }
+                var polygon = L.polygon(geometryList).addTo(mymap);
+            }
+        }
     }
 </script>
