@@ -39,7 +39,7 @@ class isoName(BaseModel):
 
 with open("countries.geojson") as f:
     data = json.load(f)
-    
+
 app = FastAPI()
 app.mount("/statics", StaticFiles(directory="statics"), name="statics")
 
@@ -67,3 +67,12 @@ def all_geometries():
 @app.get("/all_countries", response_class=HTMLResponse) #delete this endpoint when it's OK for /all_geometries
 def all_countries(request: Request):
     return templates.TemplateResponse("all_geometries.html", {"request": request, "data": data["features"]})
+
+@app.post("/add_country")
+def add_country(country: Country):
+    countryDict = {"type": "Feature", "id": country.id, "properties": {"name": country.name}, "geometry": {"type": country.geometry_type, "coordinates": [country.geometry]}}
+    newData = data
+    newData["features"].append(countryDict)
+    with open('data.geojson', 'w') as outfile:
+        json.dump(newData, outfile)
+    return countryDict
