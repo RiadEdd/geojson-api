@@ -8,10 +8,17 @@
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
     </head>
     <body>
-        <h1>GeoJSON API</h1>
-        <div class="body-wrapper">
+        <div class="navbar" id="navbar">
+            <h1>GeoJSON API</h1>
+            <button class="white-button" id="apiDataButton">API Data</button>
+        </div>
+        <div class="body-wrapper" id="body-wrapper">
             <div class="wrapper-input">
                 <input class="countries-input" type="text" id="countries" placeholder="Germany, Morocco ...">
                 <div class="wrapper-button">
@@ -29,13 +36,45 @@
             </div>
             <div class="map-wrapper">
                 <div class="map-buttons">
-                    <button class="blue-button">Add</button>
+                    <button class="blue-button" onclick="togglePopUp()">Add</button>
                     <button class="blue-button" onclick="reset_map()">Reset the map</button>
                 </div>
                 <div id="mapid"></div>
             </div>
             <div class="footer">
-                EDDAHABI Riad
+                <div class="footer-col">
+                    <a>EDDAHABI Riad, 2021</a>
+                    <a href="mailto:eddahabi.riad@gmail.com">eddahabi.riad@gmail.com</a>
+                </div>
+                <div class="footer-col">
+                    <a href="https://www.linkedin.com/in/riad-eddahabi/" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/RiadEdd" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+        <div class="pop-up-wrapper" id="popup">
+            <div class="pop-up">
+                <h2>Add a new country</h2>
+                <div class="row">
+                    <label for="id" class="pop-up-label">Id</label>
+                    <input type="text" name="id">
+                </div>
+                <div class="row">
+                    <label for="name" class="pop-up-label">Name</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="row">
+                    <label for="type" class="pop-up-label">Type</label>
+                    <input type="text" name="type">
+                </div>
+                <div class="row">
+                    <label for="coordinates" class="pop-up-label">Coordinates</label>
+                    <input type="text" name="coordinates">
+                </div>
+                <div class="pop-up-buttons">
+                    <button class="blue-button pop-up-button">Add</button>
+                    <button class="blue-button pop-up-button" onclick="togglePopUp()">Close</button>
+                </div>
             </div>
         </div>
     </body>
@@ -52,6 +91,15 @@
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoicmlhZGVkZCIsImEiOiJja3U4ajg0YmEwYXo2MnByazczeG0xb29yIn0.2T6BJsfJ34Pbm_gEOBiCvA'
 }).addTo(mymap);
+
+    document.getElementById("apiDataButton").onclick = function () {
+        location.href = "http://127.0.0.1:8000/all_countries";
+    };
+
+    function togglePopUp() {
+        var popup = document.getElementById("popup");
+        popup.classList.toggle("pop-up-appear");
+    }
 
     function all_geometries() {
         fetch("http://127.0.0.1:8000/all_geometries")
