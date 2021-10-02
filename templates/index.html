@@ -30,7 +30,7 @@
             <div class="map-wrapper">
                 <div class="map-buttons">
                     <button class="blue-button">Add</button>
-                    <button class="blue-button">Reset the map</button>
+                    <button class="blue-button" onclick="reset_map()">Reset the map</button>
                 </div>
                 <div id="mapid"></div>
             </div>
@@ -104,5 +104,20 @@
                 var polygon = L.polygon(geometryList).addTo(mymap);
             }
         }
+    }
+
+    function reset_map() {
+        /*Figure out a way to not reload the map right after*/
+        mymap.eachLayer(function (layer) {
+            mymap.removeLayer(layer);
+        });
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoicmlhZGVkZCIsImEiOiJja3U4ajg0YmEwYXo2MnByazczeG0xb29yIn0.2T6BJsfJ34Pbm_gEOBiCvA'
+        }).addTo(mymap);
     }
 </script>
