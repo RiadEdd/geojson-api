@@ -31,6 +31,10 @@ h1 {
 
 .countries-input {
     width: 30vw;
+    padding: 3px 10px 3px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
 }
 
 .wrapper-input {
