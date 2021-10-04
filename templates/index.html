@@ -34,6 +34,10 @@
             <div class="svg-wrapper">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0839bc" fill-opacity="1" d="M0,192L60,202.7C120,213,240,235,360,208C480,181,600,107,720,90.7C840,75,960,117,1080,165.3C1200,213,1320,267,1380,293.3L1440,320L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path></svg>
             </div>
+            <div class="grid">
+                <div class="grid-wrapper" id="grid-wrapper">
+                </div>
+            </div>
             <div class="map-wrapper">
                 <div class="map-buttons">
                     <button class="blue-button" onclick="togglePopUp()">Add</button>
@@ -57,22 +61,22 @@
                 <h2>Add a new country</h2>
                 <div class="row">
                     <label for="id" class="pop-up-label">Id</label>
-                    <input type="text" name="id">
+                    <input type="text" name="id" id="id">
                 </div>
                 <div class="row">
                     <label for="name" class="pop-up-label">Name</label>
-                    <input type="text" name="name">
+                    <input type="text" name="name" id="name">
                 </div>
                 <div class="row">
                     <label for="type" class="pop-up-label">Type</label>
-                    <input type="text" name="type">
+                    <input type="text" name="type" id="geometryType">
                 </div>
                 <div class="row">
                     <label for="coordinates" class="pop-up-label">Coordinates</label>
-                    <input type="text" name="coordinates">
+                    <input type="text" name="coordinates" id="geometry">
                 </div>
                 <div class="pop-up-buttons">
-                    <button class="blue-button pop-up-button">Add</button>
+                    <button class="blue-button pop-up-button" onclick="add_country()">Add</button>
                     <button class="blue-button pop-up-button" onclick="togglePopUp()">Close</button>
                 </div>
             </div>
@@ -135,6 +139,7 @@
         .then(function(data) {
             countriesData = data["items"];
             draw_countries();
+            generate_cards();
         })
         .catch(function(error) {
             console.log(error);
@@ -154,6 +159,41 @@
         }
     }
 
+    function add_country() {
+        var idVar = document.getElementById("id").value;
+        var nameVar = document.getElementById("name").value;
+        var geometryTypeVar = document.getElementById("geometryType").value;
+        var geometryVar = document.getElementById("geometry").value;
+
+        var countryData = {
+            "id": idVar,
+            "name": nameVar,
+            "geometry_type": geometryTypeVar,
+            "geometry": JSON.parse(geometryVar)
+        };
+
+        console.log(JSON.stringify(countryData));
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:8000/add_country', true);
+        xhr.onload = function () {
+            // do something to response
+            console.log(this.responseText);
+        };
+        xhr.send(JSON.stringify(countryData));
+
+        /*
+        fetch("http://127.0.0.1:8000/add_country",
+        {
+            method: "POST",
+            body: JSON.stringify(countryData)
+        })
+        /*
+        .then(function(res){ return res.json(); })
+        .then(function(data){ alert( JSON.stringify( data ) ) })
+        */
+    }
+
     function reset_map() {
         /*Figure out a way to not reload the map right after*/
         mymap.eachLayer(function (layer) {
@@ -167,5 +207,18 @@
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoicmlhZGVkZCIsImEiOiJja3U4ajg0YmEwYXo2MnByazczeG0xb29yIn0.2T6BJsfJ34Pbm_gEOBiCvA'
         }).addTo(mymap);
+    }
+
+    function generate_cards() {
+        let cardsHtml = document.getElementById("grid-wrapper");
+        let htmlString = '';
+        if(countriesData && countriesData.length != 0) {
+            for (let i = 0; i < countriesData.length; i++) {
+                //countriesData[i]["geometry"]
+                htmlString += '<div class="card"><div class="card-text"><h2>';
+                htmlString += countriesData[i]["name"] + '</h2><p>' + countriesData[i]["id"] + ", " + countriesData[i]["geometry_type"] + '</p></div></div>';
+            }
+            cardsHtml.innerHTML = htmlString;
+        }
     }
 </script>
