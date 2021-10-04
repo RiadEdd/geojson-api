@@ -15,27 +15,32 @@
                 <button class="white-button" id="apiDataButton">API Data</button>
             </div>
         </div>
-        <div class="table-wrapper">
-            <p class="data-description">Here you'll find a table of all the data in the GeoJSON API</p>
-            <table>
-                <tr>
-                    <th class="table-title-country">Country</th>
-                    <th>ISO Code</th>
-                    <th>Geometry Type</th>
-                    <th>Coordinates</th>
-                </tr>
-                {% for country in data %}
-                <tr>
-                    <td class="table-title-country">{{ country["properties"]["name"] }}</td>
-                    <td>{{ country["id"] }}</td>
-                    <td>{{ country["geometry"]["type"] }}</td>
-                    <td>{{ country["geometry"]["coordinates"] }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+
+        <div class="body-wrapper">
+            <h2>To do :</h2>
+            <ul>
+                <li>
+                    Add a delete endpoint to delete a country from the geojson file. (Easy)
+                </li>
+                <li>
+                    Fix the 422 error on the post endpoint interface (works through the /docs or curl). (Medium)
+                </li>
+                <li>
+                    Clickable cards to display data on the map. (Easy)
+                </li>
+            </ul>
         </div>
     </body>
 </html>
+
+<style>
+    .body-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+    }
+</style>
 
 <script>
     document.getElementById("apiDataButton").onclick = function () {

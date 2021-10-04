@@ -16,7 +16,10 @@
     <body>
         <div class="navbar" id="navbar">
             <h1>GeoJSON API</h1>
-            <button class="white-button" id="apiDataButton">API Data</button>
+            <div class="buttons-navbar">
+                <button class="white-button" id="devBlogButton">DevBlog</button>
+                <button class="white-button" id="apiDataButton">API Data</button>
+            </div>
         </div>
         <div class="body-wrapper" id="body-wrapper">
             <div class="wrapper-input">
@@ -99,6 +102,10 @@
 
     document.getElementById("apiDataButton").onclick = function () {
         location.href = "http://127.0.0.1:8000/all_countries";
+    };
+
+    document.getElementById("devBlogButton").onclick = function () {
+        location.href = "http://127.0.0.1:8000/devblog";
     };
 
     function togglePopUp() {
