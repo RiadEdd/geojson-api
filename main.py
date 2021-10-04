@@ -8,6 +8,7 @@ from typing import TypeVar, Generic
 from fastapi_pagination.default import Page as BasePage, Params as BaseParams
 from pydantic import BaseModel
 from typing import (Dict, List, Optional, Set, Tuple)
+from enum import Enum
 import json
 
 from starlette.requests import Request
@@ -22,14 +23,19 @@ class Params(BaseParams):
 class Page(BasePage[T], Generic[T]):
     __params_type__ = Params
 
+class geometryTypeEnum(str, Enum):
+    polygon='Polygon'
+    multiPolygon='MultiPolygon'
+
 class Country(BaseModel):
     id: str
     name: str
-    geometry_type: str
+    geometry_type: geometryTypeEnum
     geometry: List = [] #Tuple[float, float] problem with nested models
     
     class Config:
         orm_mode = True
+        use_enum_values = True
 
 class isoName(BaseModel):
     id: str
