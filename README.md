@@ -20,7 +20,7 @@ To run this project, install it locally and run this command :
 $ python -m uvicorn main:app --reload
 ```
 
-It'll run locally on the port 8000 (127.0.0.1:8000/).
+It'll run locally on the port 8000 (127.0.0.1:8000/).  
 Make sure you have the following dependencies :
 
 ```
