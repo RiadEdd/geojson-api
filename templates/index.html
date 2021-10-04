@@ -226,7 +226,9 @@
         for (let i = 0; i < countriesData.length; i++) {
             //countriesData[i]["geometry"]
             htmlString += '<div class="card"><div class="card-text"><h2>';
-            htmlString += countriesData[i]["name"] + '</h2><p>' + countriesData[i]["id"] + ", " + countriesData[i]["geometry_type"] + '</p></div></div>';
+            htmlString += countriesData[i]["name"] + '</h2><p>' + countriesData[i]["id"];
+            if (countriesData[i]["geometry_type"]) htmlString += ", " + countriesData[i]["geometry_type"];
+            htmlString += '</p></div></div>';
         }
         cardsHtml.innerHTML = htmlString;
     }
