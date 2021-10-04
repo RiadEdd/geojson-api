@@ -28,8 +28,8 @@ class Country(BaseModel):
     geometry_type: str
     geometry: List = [] #Tuple[float, float] problem with nested models
     
-    #class Config:
-    #    orm_mode = True
+    class Config:
+        orm_mode = True
 
 class isoName(BaseModel):
     id: str
