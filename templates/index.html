@@ -208,18 +208,19 @@
             zoomOffset: -1,
             accessToken: 'pk.eyJ1IjoicmlhZGVkZCIsImEiOiJja3U4ajg0YmEwYXo2MnByazczeG0xb29yIn0.2T6BJsfJ34Pbm_gEOBiCvA'
         }).addTo(mymap);
+
+        countriesData = [];
+        generate_cards();
     }
 
     function generate_cards() {
         let cardsHtml = document.getElementById("grid-wrapper");
         let htmlString = '';
-        if(countriesData && countriesData.length != 0) {
-            for (let i = 0; i < countriesData.length; i++) {
-                //countriesData[i]["geometry"]
-                htmlString += '<div class="card"><div class="card-text"><h2>';
-                htmlString += countriesData[i]["name"] + '</h2><p>' + countriesData[i]["id"] + ", " + countriesData[i]["geometry_type"] + '</p></div></div>';
-            }
-            cardsHtml.innerHTML = htmlString;
+        for (let i = 0; i < countriesData.length; i++) {
+            //countriesData[i]["geometry"]
+            htmlString += '<div class="card"><div class="card-text"><h2>';
+            htmlString += countriesData[i]["name"] + '</h2><p>' + countriesData[i]["id"] + ", " + countriesData[i]["geometry_type"] + '</p></div></div>';
         }
+        cardsHtml.innerHTML = htmlString;
     }
 </script>
