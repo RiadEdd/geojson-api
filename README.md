@@ -6,7 +6,7 @@
 * [Setup](#setup)
 
 ## General info
-This project is a simple API for informations about countries (coordinates, ISO Code, name). It is based on a geojson file (countries.geojson).
+This project is a simple API for informations about countries (coordinates, ISO Code, name). It is based on a geojson file (countries.geojson). I used vanilla JavaScript and CSS for a faster rendering.
 	
 ## Technologies
 Project is created with:
